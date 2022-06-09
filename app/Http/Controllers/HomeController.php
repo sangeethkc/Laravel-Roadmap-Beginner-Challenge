@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $posts = Post::with('category')->get();
+
+        return view('pages.home', compact('posts'));
+    }
+    public function welcome()
+    {
+        $posts = Post::with('category')->get();
+
+        return view('pages.welcome', compact('posts'));
     }
 }

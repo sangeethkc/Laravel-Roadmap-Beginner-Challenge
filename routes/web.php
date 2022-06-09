@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
+use App\Models\Post;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +20,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(HomeController::class)->group(function()
+{
+    Route::get('/','welcome')
+        ->withoutMiddleware(['auth'])
+        ->name('welcome');
+    
+    Route::get('/home','index')->name('home');
 });
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
+    
+Route::get('/posts/{post}',[App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+
+// Route::get('/posts/create',[App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
+
+Route::group(['prefix' => 'admin'], function(){
+
+    Route::resource('posts', App\Http\Controllers\Admin\PostController::class)->except(['index', 'show'])
+        ->middleware(['auth','is_admin']);
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class)
+        ->middleware(['auth','is_admin']);
+});
+
+
+Route::view('/about','pages.about')->name('about');
+
+Auth::routes();
