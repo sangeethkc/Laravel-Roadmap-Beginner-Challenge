@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            {{-- <div class="col-4">
                 <div class="card mb-4 ">
                     <div class="card-header">Categories</div>
                     <div class="card-body">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

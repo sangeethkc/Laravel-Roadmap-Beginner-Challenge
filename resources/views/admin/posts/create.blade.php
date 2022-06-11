@@ -6,20 +6,30 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">Create new Post</div>
+                    <div class="m-1">@if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                             @csrf
-                            Title:  <br>
-                            <input type="text" class="form-control" name="title" value=""/>
+                            Title: <br>
+                            <input type="text" class="form-control" name="title" value="" />
                             <br>
-                            Description:  <br>
-                            <input type="textarea" class="form-control" name="description" value=""/>
+                            Description: <br>
+                            <input type="textarea" class="form-control" name="description" value="" />
                             <br>
-                            Image:  <br>
-                            <input type="image" class="form-control" name="image" value=""/>
-                            <br>
+                            {{-- Image: <br>
+                            <input type="image" class="form-control" name="image" value="" />
+                            <br> --}}
                             Category: <br>
-                            <input type="select" class="form-control" name="title" value=""/>
+                            <input type="select" class="form-control" name="title" value="" />
                             <br>
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </form>
