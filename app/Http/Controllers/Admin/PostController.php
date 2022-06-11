@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -31,12 +32,14 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $id = Auth::user()->id;
+
         Post::create([
             'title'         => request('title'),
             'description'   => request('description'),
             'image'         => request('image'),
             'category_id'   => request('category_id'),
-            'user_id'       => Auth()->id(),
+            'user_id'       => $id,
         ]);
         return redirect()->route('posts.index');
     }

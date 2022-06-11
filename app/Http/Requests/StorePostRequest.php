@@ -28,7 +28,6 @@ class StorePostRequest extends FormRequest
             'description'   => ['required'],
             'image'         => ['nullable'],
             'category_id'   => ['required'],
-            'user_id'       => ['required'],
         ];
     }
 }
