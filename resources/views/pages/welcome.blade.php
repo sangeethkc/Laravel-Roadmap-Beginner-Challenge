@@ -8,8 +8,16 @@
                     <div class="card-header">{{ __('Dashboard') }}</div>
                     <div class="d-flex justify-content-start m-1">
                         @foreach ($posts as $post)
-                            <div class="card p-1" style="width: 18rem;">
-                                <img class="card-img-top" src="https://www.bastiaanmulder.nl/wp-content/uploads/2013/11/dummy-image-square.jpg" alt="Card image cap">
+                            <div class="card p-1" style="width: 25rem;">
+                                <div>
+                                    <img class="card-img-top"
+                                    @if (!$post->image) 
+                                        src="{{ asset('image/noimage.jpg') }}"
+                                    @else
+                                        src="storage/images/{{$post->image}}" 
+                                    @endif
+                                        alt="Card image cap">
+                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $post->title }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">{{ $post->category->name }}</h6>

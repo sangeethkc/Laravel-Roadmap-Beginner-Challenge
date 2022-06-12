@@ -34,13 +34,21 @@ class PostController extends Controller
     {
         $id = Auth::user()->id;
 
+        if($request->has('image')) 
+        {
+            $filename = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('images', $filename, 'public');
+        }
+
         Post::create([
             'title'         => request('title'),
             'description'   => request('description'),
-            'image'         => request('image'),
             'category_id'   => request('category_id'),
+            'image'         => $filename ?? null,
             'user_id'       => $id,
         ]);
+
+
         return redirect()->route('posts.index');
     }
 
@@ -66,10 +74,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if($request->has('image')) 
+        {
+            $filename = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('images', $filename, 'public');
+        }
+        
         $post->update([
             'title'         => request('title'),
             'description'   => request('description'),
-            'image'         => request('image'),
+            'image'         => $filename ?? $post->image,
             'category_id'   => request('category_id'),
             'user_id'       => Auth()->id(),
         ]);

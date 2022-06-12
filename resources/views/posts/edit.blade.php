@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">Create new Post</div>
+                    <div class="card-header">Edit Post</div>
                     <div class="m-1">
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -18,17 +18,18 @@
                         @endif
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('posts.update', $post) }}" enctype="multipart/form-data">
+                            @method('PUT')
                             @csrf
                             Title: <br>
-                            <input type="text" class="form-control" name="title" value="{{ old('title') }}" />
+                            <input type="text" class="form-control" name="title" value="{{ $post->title }}" />
                             <br>
                             Description: <br>
                             <input type="textarea" class="form-control" name="description"
-                                value="{{ old('description') }}" />
+                                value="{{ $post->description }}" />
                             <br>
                             Category: <br>
-                            <select class="form-select" value="{{ old('category_id') }}" name="category_id"
+                            <select class="form-select" value="{{ $post->category->id }}" name="category_id"
                                 label="example">
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
@@ -42,7 +43,7 @@
                             <input type="text" class="form-control" name="tags" value="" />
                             <br>
                             Image: <br>
-                            <input type="file" class="form-control" name="image" />
+                            <input type="file" class="form-control" name="image" value="{{ $post->image }}" />
                             <br>
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </form>
