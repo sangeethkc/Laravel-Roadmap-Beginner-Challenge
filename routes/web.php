@@ -19,30 +19,23 @@ use PHPUnit\TextUI\XmlConfiguration\Group;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::view('/about','pages.about')->name('about');
 
 Route::controller(HomeController::class)->group(function()
 {
-    Route::get('/','welcome')
-        ->withoutMiddleware(['auth'])
-        ->name('welcome');
-    
+    Route::get('/','welcome')->withoutMiddleware(['auth'])->name('welcome');
+        
     Route::get('/home','index')->name('home');
 });
 
-
 Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
-    
 Route::get('/posts/{post}',[App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
 
-Route::group(['prefix' => 'admin'], function(){
-
-    Route::resource('posts', App\Http\Controllers\Admin\PostController::class)->except(['index', 'show'])
-        ->middleware(['auth','is_admin']);
-    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class)
-        ->middleware(['auth','is_admin']);
+Route::group(['prefix' => 'admin', 'middleware' => 'is_admin'], function()
+{
+    Route::resource('posts', App\Http\Controllers\Admin\PostController::class)->except(['index', 'show']);
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
 });
-
-
-Route::view('/about','pages.about')->name('about');
 
 Auth::routes();
