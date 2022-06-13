@@ -29,7 +29,8 @@
                                 value="{{ $post->description }}" />
                             <br>
                             Category: <br>
-                            <select class="form-select" value="{{ $post->category->id }}" name="category_id" label="example">
+                            <select class="form-select" value="{{ $post->category->id }}" name="category_id"
+                                label="example">
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
                                         {{ $category->id == $post->category->id ? 'selected' : '' }}>

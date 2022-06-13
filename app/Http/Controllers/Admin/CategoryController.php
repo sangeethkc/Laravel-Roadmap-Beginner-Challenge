@@ -90,20 +90,17 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        
-            // if ($category->posts()->count()) {
-            //     return back()->withErrors(['error' => 'Cannot delete, category has posts.']);
-            // }
 
-        if ($category->posts()->count()) 
-        {
+        // if ($category->posts()->count()) {
+        //     return back()->withErrors(['error' => 'Cannot delete, category has posts.']);
+        // }
+
+        if ($category->posts()->count()) {
             return back()->withErrors(['error' => 'Cannot delete, category has posts.']);
-        } else 
-        {
+        } else {
             $category->delete();
         }
-        
-        return redirect()->route('categories.index');
 
+        return redirect()->route('categories.index');
     }
 }

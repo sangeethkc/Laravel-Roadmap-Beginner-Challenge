@@ -39,8 +39,7 @@ class PostController extends Controller
 
         $tags = explode(',', $request->tags);
 
-        if($request->has('image')) 
-        {
+        if ($request->has('image')) {
             $filename = time() . '-' . $request->file('image')->getClientOriginalName();
             $request->file('image')->storeAs('images', $filename, 'public');
         }
@@ -74,7 +73,7 @@ class PostController extends Controller
 
         $tags = $post->tags->implode('name', ', ');
 
-        return view('admin.posts.edit', compact('post','categories', 'tags'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -88,13 +87,12 @@ class PostController extends Controller
     {
         $tags = explode(',', $request->tags);
 
-        if($request->has('image')) 
-        {
+        if ($request->has('image')) {
             $filename = time() . '-' . $request->file('image')->getClientOriginalName();
             $request->file('image')->storeAs('images', $filename, 'public');
         }
 
-        
+
         $post->update([
             'title'         => request('title'),
             'description'   => request('description'),
@@ -104,8 +102,7 @@ class PostController extends Controller
         ]);
 
         $newTags = [];
-        foreach ($tags as $tagName) 
-        {
+        foreach ($tags as $tagName) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $post->tags()->attach($tag);
             array_push($newTags, $tag->id);
@@ -124,11 +121,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if($post->image)
-        {
-            Storage::delete('public/images/'.$post->image);
+        if ($post->image) {
+            Storage::delete('public/images/' . $post->image);
         }
-        
+
         $post->tags()->detach();
         $post->delete();
 

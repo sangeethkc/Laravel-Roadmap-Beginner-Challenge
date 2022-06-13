@@ -89,13 +89,11 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        foreach ($tag->posts as $post) 
-        {
+        foreach ($tag->posts as $post) {
             $post->tags()->detach($tag);
         }
 
-        if (!$tag->posts()->count()) 
-        {
+        if (!$tag->posts()->count()) {
             $tag->delete();
         }
 

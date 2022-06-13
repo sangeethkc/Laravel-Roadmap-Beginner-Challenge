@@ -11,13 +11,11 @@
                             <div class="card p-1" style="width: 25rem;">
                                 <div>
                                     <a href="{{ route('posts.show', $post->id) }}">
-                                    <img class="card-img-top"
-                                    @if (!$post->image) 
-                                        src="{{ asset('image/noimage.jpg') }}"
+                                        <img class="card-img-top"
+                                            @if (!$post->image) src="{{ asset('image/noimage.jpg') }}"
                                     @else
-                                        src="storage/images/{{$post->image}}" 
-                                    @endif
-                                        alt="Card image cap">
+                                        src="storage/images/{{ $post->image }}" @endif
+                                            alt="Card image cap">
                                     </a>
                                 </div>
                                 <div class="card-body">

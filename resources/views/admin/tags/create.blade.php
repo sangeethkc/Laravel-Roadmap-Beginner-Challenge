@@ -10,7 +10,7 @@
                         <form method="POST" action="{{ route('tags.store') }}">
                             @csrf
                             name: <br>
-                            <input type="text" class="form-control" name="name" value=""/>
+                            <input type="text" class="form-control" name="name" value="" />
                             <br>
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </form>

@@ -18,17 +18,18 @@
                             </thead>
                             <tbody>
                                 @foreach ($tags as $tag)
-                                <tr>
+                                    <tr>
                                         <th scope="row">{{ $tag->id }}</th>
                                         <td>{{ $tag->name }}</td>
                                         <td><a href="{{ route('tags.edit', $tag) }}" class="btn btn-warning"> Edit</a>
-                                        <form action="{{ route('tags.destroy', $tag) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                                    </form>
+                                            <form action="{{ route('tags.destroy', $tag) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger" type="submit"
+                                                    onclick="return confirm('Are you sure?')">Delete</button>
+                                            </form>
                                     </tr>
-                                    @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

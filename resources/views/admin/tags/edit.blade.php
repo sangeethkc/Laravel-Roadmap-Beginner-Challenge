@@ -11,7 +11,7 @@
                             @method('PUT')
                             @csrf
                             name: <br>
-                            <input type="text" class="form-control" name="name" value="{{ $category->name }}"/>
+                            <input type="text" class="form-control" name="name" value="{{ $category->name }}" />
                             <br>
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </form>

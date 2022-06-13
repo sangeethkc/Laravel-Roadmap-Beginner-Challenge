@@ -10,15 +10,13 @@
                         @foreach ($posts as $post)
                             <div class="card p-1" style="width: 25rem;">
                                 <a href="{{ route('posts.show', $post) }}">
-                                <div>
-                                    <img class="card-img-top"
-                                    @if (!$post->image) 
-                                        src="{{ asset('image/noimage.jpg') }}"
+                                    <div>
+                                        <img class="card-img-top"
+                                            @if (!$post->image) src="{{ asset('image/noimage.jpg') }}"
                                     @else
-                                        src="storage/images/{{$post->image}}" 
-                                    @endif
-                                        alt="Card image cap">
-                                </div>
+                                        src="storage/images/{{ $post->image }}" @endif
+                                            alt="Card image cap">
+                                    </div>
                                 </a>
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $post->title }}</h5>
