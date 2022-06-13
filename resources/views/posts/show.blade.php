@@ -24,7 +24,7 @@
                                     <h6 class="card-subtitle mb-2 text-muted">{{ $post->category->name }}</h6>
                                     <p class="card-text">{{ $post->description }}</p>
                                     @foreach ($post->tags as $tag)
-                                        <h6 class="card-subtitle mb-2 text-muted">{{ $tag->name }}</h6>
+                                        <h6 class="card-subtitle mb-2">{{ $tag->name }}</h6>
                                     @endforeach
                                 </div>
                             </div>

@@ -33,10 +33,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        @auth()
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('posts.index')}}">Posts</a>
                         </li>
+                        @auth()
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('categories.index')}}">Categories</a>
                         </li>
@@ -44,7 +44,7 @@
                             <a class="nav-link" href="{{ route('tags.index')}}">Tags</a>
                         </li>
                         @endauth
-                        </li><li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('about')}}">About</a>
                         </li>
                     </ul>

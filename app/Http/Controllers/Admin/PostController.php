@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EditPostRequest;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -73,7 +74,7 @@ class PostController extends Controller
 
         $tags = $post->tags->implode('name', ', ');
 
-        return view('admin.posts.edit', compact('post','categories'));
+        return view('admin.posts.edit', compact('post','categories', 'tags'));
     }
 
     /**
@@ -83,13 +84,16 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(EditPostRequest $request, Post $post)
     {
+        $tags = explode(',', $request->tags);
+        
         if($request->has('image')) 
         {
             $filename = time() . '-' . $request->file('image')->getClientOriginalName();
             $request->file('image')->storeAs('images', $filename, 'public');
         }
+
         
         $post->update([
             'title'         => request('title'),
@@ -98,6 +102,16 @@ class PostController extends Controller
             'category_id'   => request('category_id'),
             'user_id'       => Auth()->id(),
         ]);
+
+        $newTags = [];
+        foreach ($tags as $tagName) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $post->tags()->attach($tag);
+            array_push($newTags, $tag->id);
+        }
+        $post->tags()->sync($newTags);
+
+
         return redirect()->route('posts.index');
     }
 
