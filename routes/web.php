@@ -23,15 +23,15 @@ Route::view('/about','pages.about')->name('about');
 
 Route::controller(HomeController::class)->group(function()
 {
-    Route::get('/','welcome')->withoutMiddleware(['auth'])->name('welcome');
+    Route::get('/','welcome')->withoutMiddleware(['auth'])->name('welcome'); // without auth
         
-    Route::get('/home','index')->name('home');
+    Route::get('/home','index')->name('home'); //with auth
 });
 
 Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}',[App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'is_admin'], function()
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_admin']], function()
 {
     Route::resource('posts', App\Http\Controllers\Admin\PostController::class)->except(['index', 'show']);
     Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);

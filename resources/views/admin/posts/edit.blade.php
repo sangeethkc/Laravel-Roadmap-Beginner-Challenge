@@ -40,7 +40,7 @@
                             </select>
                             <br>
                             Tags: <br>
-                            <input type="text" class="form-control" name="tags" value="" />
+                            <input type="text" class="form-control" name="tags" value="{{ old('tags', $tags) }}" />
                             <br>
                             Image: <br>
                             <input type="file" class="form-control" name="image" value="{{ $post->image }}" />

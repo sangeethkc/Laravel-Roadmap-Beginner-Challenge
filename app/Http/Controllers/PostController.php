@@ -21,10 +21,4 @@ class PostController extends Controller
     {
         return view('posts.index', compact('post'));
     }
-    public function create()
-    {
-        $categories = Category::all();
-
-        return view('posts.create', compact('categories'));
-    }
 }

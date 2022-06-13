@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -34,19 +36,26 @@ class PostController extends Controller
     {
         $id = Auth::user()->id;
 
+        $tags = explode(',', $request->tags);
+
         if($request->has('image')) 
         {
             $filename = time() . '-' . $request->file('image')->getClientOriginalName();
             $request->file('image')->storeAs('images', $filename, 'public');
         }
 
-        Post::create([
+        $post = Post::create([
             'title'         => request('title'),
             'description'   => request('description'),
             'category_id'   => request('category_id'),
             'image'         => $filename ?? null,
             'user_id'       => $id,
         ]);
+
+        foreach ($tags as $tagName) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $post->tags()->attach($tag);
+        }
 
 
         return redirect()->route('posts.index');
@@ -62,7 +71,9 @@ class PostController extends Controller
     {
         $categories = Category::all();
 
-        return view('posts.edit', compact('post','categories'));
+        $tags = $post->tags->implode('name', ', ');
+
+        return view('admin.posts.edit', compact('post','categories'));
     }
 
     /**
@@ -98,6 +109,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if($post->image)
+        {
+            Storage::delete('public/storage/images' . $post->image);
+        }
+        
+        $post->tags()->detach();
         $post->delete();
 
         return redirect()->route('posts.index');
