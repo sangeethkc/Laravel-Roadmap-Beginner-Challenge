@@ -17,18 +17,27 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if (session('errors'))
+                                    <div class="alert alert-danger" role="alert">
+                                        @foreach ($errors->all() as $message)
+                                            <p>{{ $message }}</p>
+                                        @endforeach
+                                    </div>
+                                @endif
                                 @foreach ($categories as $category)
-                                <tr>
+                                    <tr>
                                         <th scope="row">{{ $category->id }}</th>
                                         <td>{{ $category->name }}</td>
-                                        <td><a href="{{ route('categories.edit', $category) }}" class="btn btn-warning"> Edit</a>
-                                        <form action="{{ route('categories.destroy', $category) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                                    </form>
+                                        <td><a href="{{ route('categories.edit', $category) }}" class="btn btn-warning">
+                                                Edit</a>
+                                            <form action="{{ route('categories.destroy', $category) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger" type="submit"
+                                                    onclick="return confirm('Are you sure?')">Delete</button>
+                                            </form>
                                     </tr>
-                                    @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
