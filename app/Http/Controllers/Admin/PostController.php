@@ -87,7 +87,7 @@ class PostController extends Controller
     public function update(EditPostRequest $request, Post $post)
     {
         $tags = explode(',', $request->tags);
-        
+
         if($request->has('image')) 
         {
             $filename = time() . '-' . $request->file('image')->getClientOriginalName();
@@ -104,7 +104,8 @@ class PostController extends Controller
         ]);
 
         $newTags = [];
-        foreach ($tags as $tagName) {
+        foreach ($tags as $tagName) 
+        {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $post->tags()->attach($tag);
             array_push($newTags, $tag->id);
