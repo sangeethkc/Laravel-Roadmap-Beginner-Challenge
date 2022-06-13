@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -111,7 +111,7 @@ class PostController extends Controller
     {
         if($post->image)
         {
-            Storage::delete('public/storage/images' . $post->image);
+            Storage::delete('public/images/'.$post->image);
         }
         
         $post->tags()->detach();
